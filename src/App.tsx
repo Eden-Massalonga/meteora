@@ -4,6 +4,7 @@ import Header from './components/Header';
 import styled from 'styled-components'
 import Sidebar from './components/Sidebar';
 import Section from './components/Section';
+import {ForecastProvider} from './context/ForecastContext';
 
 const Container = styled.div`
   display: flex;
@@ -20,10 +21,12 @@ function App() {
     <div className="App">
       <Header />
       {/* State */}
+      <ForecastProvider>
         <Container>
           <Sidebar />
           <Section />
         </Container>
+      </ForecastProvider>
     </div>
   );
 }
