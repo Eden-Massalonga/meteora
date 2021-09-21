@@ -1,5 +1,4 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital@0;1&family=Ubuntu:ital@0;1&display=swap');
 
 *{
     margin: 0px;
@@ -7,7 +6,7 @@
 }
 
 body{
-    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
     background: #83a4d4;  /* fallback for old browsers */
     /* background-image: url('./alessio-soggetti-cfKC0UOZHJo-unsplash.jpg') no-repeat left top; */
     background: -webkit-linear-gradient(to left, #b6fbff, #83a4d4);  /* Chrome 10-25, Safari 5.1-6 */

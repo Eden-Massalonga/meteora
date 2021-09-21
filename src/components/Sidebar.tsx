@@ -1,6 +1,7 @@
 import { useContext, useEffect } from 'react'
 import styled from 'styled-components'
-import { useFormik } from 'formik'
+import { ErrorMessage, useFormik } from 'formik'
+import * as Yup from 'yup';
 import WeatherCard from './sidebar/WeatherCard'
 import { ForecastContext } from '../context/ForecastContext'
 import ErrorCard from './utils/ErrorCard'
@@ -82,6 +83,12 @@ const Sidebar = () => {
             city: '',
             units: units
         },
+        validationSchema: Yup.object({
+            city: Yup.string()
+                .max(30, 'Must be 15 characters or less')
+                .required('Required')
+                .matches(/^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/, 'Invalid city name, check the spelling')
+        }),
         onSubmit: values => {
             onSubmit(values.city)
             formik.setFieldValue('city', '')
@@ -105,7 +112,8 @@ const Sidebar = () => {
                         />
                         <button type="submit" style={{ width: '15%', color: '#FFF', border: 'none', textDecoration: 'none', backgroundColor: '#333' }}>➤</button>
                     </div>
-
+                    {/* Validation Error */}
+                    {formik.touched.city && formik.errors.city && <ErrorCard message={formik.errors.city} />}
                     <div
                         className={'radio'}
                         role="group"

@@ -29,7 +29,7 @@ const CardDetails = styled.div`
 
 const DetailsRow = styled.p`
     font-size: 12pt;
-    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
     font-style: italic;
 `
 
