@@ -26,15 +26,20 @@ interface IForecast {
 
 interface IForecastContext {
     city: string,
+    units: string,
     coords: ICoords,
     forecast: IForecast[],
+    loading: boolean,
+    error: boolean,
+    errorMessage: string,
     changeCity: (city: string) => void,
-    getLocation: (city: string) => void
-
+    getLocation: (city: string) => void,
+    changeUnits:  (city: string) =>  Promise<void>,
 }
 
 const defaultState = {
     city: 'Maputo',
+    units: 'metric',
     coords: {
         lat: -25.953724,
         lon: 32.588711
@@ -57,8 +62,12 @@ const defaultState = {
             wind_speed: 0
         }
     ],
-    changeCity: (city: string) => { },
-    getLocation: (city: string) => { }
+    loading: true,
+    error: false,
+    errorMessage: '',
+    changeCity: (city: string) => {},
+    getLocation: (city: string) => {},
+    changeUnits: async (city: string) => {},
 }
 
 const server = 'https://api.openweathermap.org/data/2.5/weather'
@@ -69,14 +78,35 @@ const ForecastContext = createContext<IForecastContext>(defaultState);
 const ForecastProvider: FC = ({ children }) => {
     const [city, setCity] = useState(defaultState.city);
     const [coords, setCoords] = useState(defaultState.coords);
+    const [units, setUnits] = useState(defaultState.units)
     const [forecast, setForecast] = useState(defaultState.forecast);
+    const [loading, setloading] = useState(defaultState.loading)
+    const [error, setError] = useState(defaultState.error)
+    const [errorMessage, setErrorMessage] = useState(defaultState.errorMessage)
 
     const changeCity = (city: string) => {
         setCity(city)
     }
 
+    const changeUnits = async (units: string) => {
+        console.log(units);
+        
+        if(units == 'metric'){
+            setUnits('metric');
+            // await getLocation(city);
+        }else{
+            setUnits('imperial');
+            // await getLocation(city);
+        }
+    }
+
     const getLocation = async (city: string) => {
         try {
+            //Reset old values
+            setError(false);
+            setErrorMessage('')
+
+            //Make new request
             const res = await axios.get(`${server}?q=${city}&APPID=${appId}`)
 
             if (res.status == 200) {
@@ -86,7 +116,7 @@ const ForecastProvider: FC = ({ children }) => {
                 setCity(data['name']);
                 setCoords(data['coord'])
 
-                const res7daysForecast = await axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${coords.lat}&lon=${coords.lon}&exclude=current,minutely,hourly&units=metric&appid=${appId}`);
+                const res7daysForecast = await axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${coords.lat}&lon=${coords.lon}&exclude=current,minutely,hourly&units=${units}&appid=${appId}`);
 
                 // console.log('5 days',res7daysForecast.data);
                 if (res.status == 200) {
@@ -106,14 +136,22 @@ const ForecastProvider: FC = ({ children }) => {
                     }
                     
                     setForecast(_5daysForecast)
-                }
+                    setloading(false)
 
-            }
-            else
+                    console.log(forecastData);
+                    
+                }
+                        }
+            else{
                 console.log('Error: ', res.data);
+                setError(true);
+                setErrorMessage('Error: Unable to get weather for ' + city)
+            }
 
         } catch (error) {
             console.log(error);
+            setError(true);
+            setErrorMessage('Error: City ' + city + ' not found')
         }
     }
 
@@ -122,9 +160,14 @@ const ForecastProvider: FC = ({ children }) => {
         <ForecastContext.Provider value={{
             city,
             coords,
+            units,
             forecast,
+            loading,
+            error,
+            errorMessage,
             changeCity,
-            getLocation
+            getLocation,
+            changeUnits
         }}>
             {children}
         </ForecastContext.Provider>

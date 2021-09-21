@@ -22,6 +22,8 @@ export interface IForecast{
 
 export interface ICardForecast{
     dt: number,
+    humidity?: number,
+    pressure?: number,
     temp: {
         min: number,
         max: number
@@ -31,7 +33,9 @@ export interface ICardForecast{
         icon: string,
         id: number,
         main: string
-    }
+    },
+    wind_speed?: number,
+    current?: boolean
 }
 
 export interface IForecastContext {

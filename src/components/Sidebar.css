@@ -1,0 +1,28 @@
+.radio{
+    display: inline-flex;
+    overflow: hidden;
+    /* border-radius: 15px; */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+}
+
+.radio__input{
+    display: none;
+}
+
+.radio__label{
+    padding: 8px 14px;
+    font-size: 14px;
+    /* font-family: sans-serif; */
+    color: #FFF;
+    background: #4f4fAf;
+    cursor: pointer;
+    transition: background 0.1s;
+}
+
+.radio__label:not(:last-of-type){
+    border-right: 0.1px solid #FFF;
+}
+
+.radio__input:checked + .radio__label{
+    background: #ACA
+}
