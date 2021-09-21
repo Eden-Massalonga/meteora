@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react'
 import styled from 'styled-components'
-import { ErrorMessage, useFormik } from 'formik'
+import { useFormik } from 'formik'
 import * as Yup from 'yup';
 import WeatherCard from './sidebar/WeatherCard'
 import { ForecastContext } from '../context/ForecastContext'
