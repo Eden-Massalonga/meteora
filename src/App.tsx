@@ -6,6 +6,7 @@ import Sidebar from './components/Sidebar';
 import Section from './components/Section';
 import {ForecastProvider} from './context/ForecastContext';
 import Map  from './components/TemperatureMap';
+import Footer from './components/Footer';
 
 const Container = styled.div`
   //Mobile 
@@ -35,14 +36,23 @@ const Container = styled.div`
   border-all: 1px solid gray;
   width: 100%;
   background: rgba(255,255,255,0.1);
-}  
-  
+}   
 `
+
+const SectionTitle = styled.p`
+    text-align: center;
+    font-size: 14pt;
+    font-weight: bold;
+    padding: 10px;
+    border-bottom: dashed .3px;
+`
+
 
 function App() {
   return (
     <div className="App">
       <Header />
+      <SectionTitle>Get 5 days Forecast</SectionTitle>
       {/* State */}
       <ForecastProvider>
         <Container>
@@ -51,6 +61,7 @@ function App() {
         </Container>
         <Map />
       </ForecastProvider>
+      <Footer />
     </div>
   );
 }

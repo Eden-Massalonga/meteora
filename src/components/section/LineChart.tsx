@@ -5,7 +5,14 @@ import moment from 'moment';
 import styled from 'styled-components';
 
 const ChartContainer = styled.div`
+    margin: 10px auto;
+    padding: 15px;
+    height: 200px;
     width: 90%;
+    box-shadow: 2px 1px 1px 0px rgba(0,0,0,0.2);
+    border: 0.2px solid rgba(0,0,0,0.2);
+    border-radius: 5px 5px 5px 5px;
+    background: rgba(255,255,255,0.4);
 `
 
 const LineChart = () => {
@@ -25,7 +32,7 @@ const LineChart = () => {
             labels: days,
             datasets: [
                 {
-                    label: '5 days Forecast Max',
+                    label: 'Max Temps.',
                     fill: false,
                     lineTension: 0.1,
                     backgroundColor: 'rgba(255, 23, 68,0.4)',
@@ -47,7 +54,7 @@ const LineChart = () => {
                 },
 
                 {
-                    label: '5 days Forecast Min',
+                    label: 'Min temps.',
                     fill: false,
                     lineTension: 0.1,
                     backgroundColor: 'rgba(255, 196, 0,0.4)',
@@ -75,7 +82,7 @@ const LineChart = () => {
 
                 title: {
                     display: true,
-                    text: 'OOO',
+                    text: '',
                     fontSize: 14
                 },
                 legend: {
@@ -150,7 +157,7 @@ const LineChart = () => {
             display: true,
             position: 'right'
         },
-        maintainAspectRatio: false,
+        maintainAspectRatio: true,
     }
     );
 

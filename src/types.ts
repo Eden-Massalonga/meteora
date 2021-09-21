@@ -1,9 +1,12 @@
+export const GET_WEATHER = 'GET_WEATHER';
+export const GET_LOCATION = 'GET_LOCATION';
+
 export interface ICoords {
     lat: number,
     lon: number
 }
 
-export interface IForecast{
+export interface IForecast {
     dt: number,
     humidity: number,
     pressure: number,
@@ -18,6 +21,19 @@ export interface IForecast{
         main: string
     },
     wind_speed: number
+}
+
+export interface IForecastContext {
+    city: string,
+    units: string,
+    coords: ICoords,
+    forecast: IForecast[],
+    loading: boolean,
+    error: boolean,
+    errorMessage: string,
+    changeCity: (city: string) => void,
+    getLocation: (city: string) => void,
+    changeUnits:  (city: string) =>  Promise<void>,
 }
 
 export interface ICardForecast{
@@ -38,11 +54,3 @@ export interface ICardForecast{
     current?: boolean
 }
 
-export interface IForecastContext {
-    city: string,
-    coords: ICoords,
-    forecast: IForecast[],
-    changeCity: (city: string) => void,
-    getLocation: (city: string) => void
-
-}

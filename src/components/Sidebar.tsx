@@ -1,15 +1,14 @@
-import React, { useContext, useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import { useFormik } from 'formik'
 import WeatherCard from './sidebar/WeatherCard'
 import { ForecastContext } from '../context/ForecastContext'
-import Title from './utils/Title'
 import ErrorCard from './utils/ErrorCard'
 import './Sidebar.css'
 
 const InputContainer = styled.div`
-    width: 100%;
-    padding: 0px;
+    width: 95%;
+    padding: 0px 10px;
     // border-right: solid;
     // margin: 10px auto;
     justify-content: center;
@@ -18,7 +17,7 @@ const InputContainer = styled.div`
     // For tablet
     @media only screen and (min-width: 600px){
         width: 40%;
-        padding: 5px;
+        padding: 0px 10px;
         // border-right: solid;
         // margin: 10px auto;
         justify-content: center;
@@ -28,12 +27,22 @@ const InputContainer = styled.div`
     // For tablet
     @media only screen and (min-width: 768px){
         width: 30%;
-        padding: 10px;
+        padding: 0px 10px;
         // border-right: solid;
         // margin: 10px auto;
         justify-content: center;
         // background-color: #333;
     }
+`
+const Title = styled.div`
+    color: #FFF;
+    background-color: rgb(4,170,109,0.7);
+    padding: 5px;
+    margin: 0px 0px 0px 0px;
+    font-weight: bold;
+    text-shadow: .7px .7px #000;
+    border: 0.2px solid rgba(0,0,0,0.2);
+    border-radius: 5px 5px 0px 0px;    
 `
 
 const FormContainer = styled.div`
@@ -46,89 +55,74 @@ const FormContainer = styled.div`
     background: rgba(255,255,255,0.4);
 `
 
-// const FormControl = styled.div`
-//     display: flex;
-//     flex-direction: column;
-// `
-
 const Sidebar = () => {
-    // const weatherContext = useContext(WeatherContext)
-    // const {getLocation} = weatherContext;
-
     const { city, forecast, error, errorMessage, units, changeUnits, getLocation } = useContext(ForecastContext);
 
-    //Efeito desejado
+    //Update the weather when units are changed
     useEffect(() => {
         getLocation(city);
-    }, [units])
+    }, [units, city, getLocation])
 
-    const onChangeA = async (event: any) => {
-        // console.log(event);
-        // alert(event.target.value);
+    //Get the changes in weather units
+    const onChangeUnits = async (event: any) => {
         changeUnits(event.target.value);
     };
 
+    //Send the user input data and request weather data
     const onSubmit = (city: string) => {
-        // changeCity(city);
         getLocation(city);
     }
 
+    //Get the current - today forecast
     const todayForecast = forecast[0];
 
+    //User input form
     const formik = useFormik({
         initialValues: {
             city: '',
             units: units
         },
         onSubmit: values => {
-            console.log(values);
             onSubmit(values.city)
+            formik.setFieldValue('city', '')
         }
     })
 
     return (
         <InputContainer>
             <FormContainer>
-                <Title><span style={{ color: '#000' }}>City Weather :</span>  {city}</Title>
+                <Title><span style={{ color: '#000', textShadow: 'none' }}>City Weather :</span>  {city}</Title>
 
-                <div>
-                    <form onSubmit={formik.handleSubmit}>
-                        {/* <FormControl> */}
-                        {/* <label htmlFor="city">City name</label> */}
-                        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', position: 'sticky', top: 0 }}>
-                            <input
-                                id="city"
-                                name="city"
-                                type="city"
-                                onChange={formik.handleChange}
-                                value={formik.values.city}
-                                style={{ width: '90%' }}
-                            />
-                            <button type="submit" style={{ width: '10%' }}>➤</button>
-                        </div>
+                <form onSubmit={formik.handleSubmit}>
+                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', position: 'sticky', top: 0 }}>
+                        <input
+                            id="city"
+                            name="city"
+                            type="city"
+                            onChange={formik.handleChange}
+                            value={formik.values.city}
+                            style={{ width: '85%', padding: '5px' }}
+                        />
+                        <button type="submit" style={{ width: '15%', color: '#FFF', border: 'none', textDecoration: 'none', backgroundColor: '#333' }}>➤</button>
+                    </div>
 
-                        {/* </FormControl> */}
-                        <div
-                            className={'radio'}
-                            role="group"
-                            aria-labelledby="my-radio-group"
-                            onChange={(event) => onChangeA(event)}
-                        >
-                            <input type="radio" id={'metric'} className={'radio__input'} checked={units == 'metric'} name="units" value="metric" />
-                            <label htmlFor={'metric'} className={'radio__label'}>
-                                &deg;C
-                            </label>
+                    <div
+                        className={'radio'}
+                        role="group"
+                        aria-labelledby="my-radio-group"
+                        onChange={(event) => onChangeUnits(event)}
+                    >
+                        <input type="radio" id={'metric'} className={'radio__input'} checked={units === 'metric'} name="units" value="metric" />
+                        <label htmlFor={'metric'} className={'radio__label'}>
+                            &deg;C
+                        </label>
 
-                            <input type="radio" id={'imperial'} className={'radio__input'} checked={units == 'imperial'} name="units" value="imperial" />
-                            <label htmlFor={'imperial'} className={'radio__label'}>
-                                &deg;F
-                            </label>
-                            {/* <div>Picked: {values.picked}</div> */}
-                        </div>
-
-                        <br />
-                    </form>
-                </div>
+                        <input type="radio" id={'imperial'} className={'radio__input'} checked={units === 'imperial'} name="units" value="imperial" />
+                        <label htmlFor={'imperial'} className={'radio__label'}>
+                            &deg;F
+                        </label>
+                    </div>
+                </form>
             </FormContainer>
 
 

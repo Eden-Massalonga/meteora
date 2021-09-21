@@ -6,7 +6,8 @@ import WeatherCard from './sidebar/WeatherCard'
 
 const WeatherCardsContainer = styled.div`
     display: grid;
-    grid-template-columns: auto auto; 
+    grid-template-columns: auto auto;
+    grid-column-gap: 5px; 
     // flex-direction: row;
     // justify-content: center;
     // align-content: space-between;
@@ -15,6 +16,7 @@ const WeatherCardsContainer = styled.div`
     @media only screen and (min-width: 600px){
         display: grid;
         grid-template-columns: auto auto; 
+        grid-column-gap: 5px; 
         // display: flex;
         // flex-direction: row;
         // justify-content: center;
@@ -25,20 +27,23 @@ const WeatherCardsContainer = styled.div`
     @media only screen and (min-width: 768px){
         display: flex;
         flex-direction: row;
-        justify-content: space-around;
+        justify-content: center;
         // align-content: space-between;
         // flex-wrap: wrap;
     }
 `
 
 const MainContentDiv = styled.div`
-    margin: 5px auto;
-    padding: 5px;  
-    width: 100%;
+    margin: 0px auto;
+    padding: 0px 5px 0px 5px;  
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
     @media only screen (min-width: 600px){
-        margin: 10px auto;
-        padding: 10px;  
+        margin: 0px auto;
+        padding: 0px;  
         width: 60%;
     }
 `
@@ -50,8 +55,10 @@ const Section = () => {
         <MainContentDiv>
             <WeatherCardsContainer>
                 {forecast.map((dailyForecast, index) => {
-                    if(index != 0)
-                    return <WeatherCard key={index} dt={dailyForecast.dt} weather={dailyForecast.weather} temp={dailyForecast.temp}/>
+                    if(index !== 0)
+                        return <WeatherCard key={index} dt={dailyForecast.dt} weather={dailyForecast.weather} temp={dailyForecast.temp}/>
+                    else
+                        return ''
                 })}
             </WeatherCardsContainer>
 

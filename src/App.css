@@ -1,11 +1,15 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital@0;1&display=swap');
+
 *{
     margin: 0px;
     padding: 0px;
 }
 
 body{
+    font-family: 'Ubuntu', sans-serif;
     background: #83a4d4;  /* fallback for old browsers */
-    background-image: url('./alessio-soggetti-cfKC0UOZHJo-unsplash.jpg');
+    /* background-image: url('./alessio-soggetti-cfKC0UOZHJo-unsplash.jpg') no-repeat left top; */
     background: -webkit-linear-gradient(to left, #b6fbff, #83a4d4);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to left, #b6fbff, #83a4d4); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
@@ -13,4 +17,5 @@ body{
 .leaflet-container{
     width: 100%;
     height: 100%;
+    border-radius: 5px;
 }

@@ -4,7 +4,8 @@ import styled from 'styled-components'
 const Nav = styled.header`
     color: white;
     background-color: #333;
-    padding: 4pt; 
+    font-size: 22pt;
+    padding: 10px; 
 `
 
 const Header = () => {
