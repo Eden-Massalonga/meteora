@@ -27,8 +27,10 @@ const WeatherCardsContainer = styled.div`
     @media only screen and (min-width: 768px){
         display: flex;
         flex-direction: row;
-        justify-content: center;
-        // align-content: space-between;
+        margin: 0px 10px 0px 10px;
+        column-gap: 10px;
+        justify-content: space-between;
+        align-content: strech;
         // flex-wrap: wrap;
     }
 `
@@ -43,6 +45,12 @@ const MainContentDiv = styled.div`
 
     @media only screen (min-width: 600px){
         margin: 0px auto;
+        padding: 0px;  
+        width: 60%;
+    }
+
+    @media only screen (min-width: 768px){
+        // margin: 0px auto;
         padding: 0px;  
         width: 60%;
     }

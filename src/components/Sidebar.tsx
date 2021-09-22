@@ -18,14 +18,14 @@ const InputContainer = styled.div`
     // For tablet
     @media only screen and (min-width: 600px){
         width: 40%;
-        padding: 0px 10px;
+        padding: 0px 0px 0px 3px;
         // border-right: solid;
         // margin: 10px auto;
         justify-content: center;
         // background-color: #333;
     }
 
-    // For tablet
+    // For Desktop
     @media only screen and (min-width: 768px){
         width: 30%;
         padding: 0px 10px;
@@ -37,21 +37,22 @@ const InputContainer = styled.div`
 `
 const Title = styled.div`
     color: #FFF;
-    background-color: rgb(4,170,109,0.7);
+    background-color: #333;
     padding: 5px;
-    margin: 0px 0px 0px 0px;
-    font-weight: bold;
-    text-shadow: .7px .7px #000;
+    margin: 0px 0px 10px 0px;
+    font-size: 16pt;
+    // font-weight: bold;
+    // text-shadow: .7px .7px #000;
     border: 0.2px solid rgba(0,0,0,0.2);
-    border-radius: 5px 5px 0px 0px;    
+    border-radius: 0px 5px 0px 0px;    
 `
 
 const FormContainer = styled.div`
     margin: 5px 0px;
-    padding: 3px;
+    padding: 10px;
     box-shadow: 2px 1px 1px 0px rgba(0,0,0,0.2);
     border: 0.2px solid rgba(0,0,0,0.2);
-    border-radius: 5px 5px 5px 5px;
+    border-radius: 0px 5px 0px 5px;
     transition: 0.3s;
     background: rgba(255,255,255,0.4);
 `
@@ -62,7 +63,7 @@ const Sidebar = () => {
     //Update the weather when units are changed
     useEffect(() => {
         getLocation(city);
-    }, [units, city, getLocation])
+    }, [units])
 
     //Get the changes in weather units
     const onChangeUnits = async (event: any) => {
@@ -85,47 +86,47 @@ const Sidebar = () => {
         },
         validationSchema: Yup.object({
             city: Yup.string()
-                .max(30, 'Must be 15 characters or less')
-                .required('Required')
+                .min(2, 'The name you entered is to short')
+                .required('City name required')
                 .matches(/^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/, 'Invalid city name, check the spelling')
         }),
         onSubmit: values => {
             onSubmit(values.city)
-            formik.setFieldValue('city', '')
         }
     })
 
     return (
         <InputContainer>
             <FormContainer>
-                <Title><span style={{ color: '#000', textShadow: 'none' }}>City Weather :</span>  {city}</Title>
+                <Title><span style={{ }}>{city} Weather</span></Title>
 
                 <form onSubmit={formik.handleSubmit}>
                     <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', position: 'sticky', top: 0 }}>
                         <input
-                            id="city"
-                            name="city"
-                            type="city"
+                            id='city'
+                            name='city'
+                            type='search'
                             onChange={formik.handleChange}
+                            placeholder={'City name'}
                             value={formik.values.city}
                             style={{ width: '85%', padding: '5px' }}
                         />
-                        <button type="submit" style={{ width: '15%', color: '#FFF', border: 'none', textDecoration: 'none', backgroundColor: '#333' }}>➤</button>
+                        <button type='submit' style={{ width: '15%', color: '#FFF', border: 'none', textDecoration: 'none', backgroundColor: '#333' }}>➤</button>
                     </div>
                     {/* Validation Error */}
                     {formik.touched.city && formik.errors.city && <ErrorCard message={formik.errors.city} />}
                     <div
                         className={'radio'}
-                        role="group"
-                        aria-labelledby="my-radio-group"
+                        role='group'
+                        aria-labelledby='my-radio-group'
                         onChange={(event) => onChangeUnits(event)}
                     >
-                        <input type="radio" id={'metric'} className={'radio__input'} checked={units === 'metric'} name="units" value="metric" />
+                        <input type='radio' id={'metric'} className={'radio__input'} checked={units === 'metric'} name='units' value='metric' />
                         <label htmlFor={'metric'} className={'radio__label'}>
                             &deg;C
                         </label>
 
-                        <input type="radio" id={'imperial'} className={'radio__input'} checked={units === 'imperial'} name="units" value="imperial" />
+                        <input type='radio' id={'imperial'} className={'radio__input'} checked={units === 'imperial'} name='units' value='imperial' />
                         <label htmlFor={'imperial'} className={'radio__label'}>
                             &deg;F
                         </label>

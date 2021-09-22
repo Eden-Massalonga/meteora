@@ -21,13 +21,13 @@ const LineChart = () => {
     const maxTemps: number[] = [];
     const minTemps: number[] = [];
 
-    useEffect(() => {
-        forecast.map((dailyForecast, index) => {
-            days[index] = moment.unix(dailyForecast.dt).format('ddd - DD/MM/YY')
-            maxTemps[index] = Math.round(dailyForecast.temp.max)
-            minTemps[index] = dailyForecast.temp.min
-        })
+    forecast.forEach((dailyForecast, index) => {
+        days[index] = moment.unix(dailyForecast.dt).format('ddd - DD/MM/YY')
+        maxTemps[index] = Math.round(dailyForecast.temp.max)
+        minTemps[index] = dailyForecast.temp.min
+    })
 
+    useEffect(() => {
         setBarData({
             labels: days,
             datasets: [

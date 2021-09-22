@@ -36,8 +36,8 @@ const defaultState = {
     changeUnits: async (city: string) => {},
 }
 
-const server = 'https://api.openweathermap.org/data/2.5/weather'
-const appId = '07fa4a80502baf3232f10c184f028f57'
+const server = process.env.REACT_APP_API_SERVER;
+const appId = process.env.REACT_APP_API_KEY;
 
 //Forecast context
 const ForecastContext = createContext<IForecastContext>(defaultState);
@@ -126,7 +126,7 @@ const ForecastProvider: FC = ({ children }) => {
             */
             console.log(error);
             setError(true);
-            setErrorMessage('Error: City ' + city + ' not found')
+            setErrorMessage('Error:' + city + ' city not found')
         }
     }
 

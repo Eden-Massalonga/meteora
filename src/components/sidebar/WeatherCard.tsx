@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import styled from 'styled-components'
-import Moment from 'react-moment';
+import moment from 'moment';
 import {WiHumidity} from 'react-icons/wi';
 import { ICardForecast } from '../../types';
 import Title from '../utils/Title'
@@ -9,7 +9,7 @@ import Loader from '../utils/Loader';
 
 const Card = styled.div`
     margin: 5px 0px;
-    padding: 3px;
+    padding: 10px;
     box-shadow: 2px 1px 1px 0px rgba(0,0,0,0.2);
     border: 0.2px solid rgba(0,0,0,0.2);
     border-radius: 5px 5px 5px 5px;
@@ -28,7 +28,7 @@ const CardDetails = styled.div`
 `;
 
 const DetailsRow = styled.p`
-    font-size: 12pt;
+    font-size: 11pt;
     font-family: 'Source Sans Pro', sans-serif;
     font-style: italic;
 `
@@ -46,7 +46,7 @@ const WeatherCard = ({ dt, weather, temp, humidity, pressure, wind_speed, curren
     else
         return (
             <Card>
-                <Title><Moment unix format='ddd'>{dt}</Moment></Title>
+                <Title>{moment.unix(dt).format('ddd')}</Title>
                 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
                     <img src={`http://openweathermap.org/img/wn/${weather.icon}@2x.png`} alt={'Weather Icon'} />
                     <div style={{margin: '2px'}}>

@@ -34,7 +34,7 @@ const Container = styled.div`
   flex-direction: row;
   // border-style: solid;
   border-all: 1px solid gray;
-  width: 100%;
+  width: 80%;
   background: rgba(255,255,255,0.1);
 }   
 `
@@ -43,6 +43,8 @@ const SectionTitle = styled.p`
     text-align: center;
     font-size: 14pt;
     font-weight: bold;
+    background-color: rgba(255,255,255,.2);
+    margin-bottom: 10px;
     padding: 10px;
     border-bottom: dashed .3px;
 `
