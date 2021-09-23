@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { MapContainer, Marker, TileLayer, Tooltip, useMapEvents } from "react-leaflet";
+import { LayersControl, MapContainer, Marker, TileLayer, Tooltip, useMapEvents } from "react-leaflet";
 import styled from 'styled-components';
 import { ForecastContext } from '../context/ForecastContext';
 
@@ -23,7 +23,7 @@ const MapTitle = styled.p`
 `
 
 //Complete Map API URL Request
-const mapUrl = process.env.REACT_APP_MAP_API_SERVER+''+process.env.REACT_APP_API_KEY;
+const mapUrl = process.env.REACT_APP_MAP_API_SERVER + '' + process.env.REACT_APP_API_KEY;
 
 const Map = () => {
     const { city, coords } = useContext(ForecastContext);
@@ -52,11 +52,50 @@ const Map = () => {
                     center={[coords.lat, coords.lon]}
                     zoom={3}
                 >
-                    <TileLayer
-                        attribution='&copy; <a href="https://openweathermap.org/">OpenWeather</a> contributors'
-                        url={mapUrl}
-                    />
-                    <LocationMarker />
+                    
+                    <LayersControl position='topright' collapsed={false} hideSingleBase={false}>
+                        <LayersControl.BaseLayer checked name="World Map">
+                            <TileLayer
+                                attribution='&copy; <a href="https://openweathermap.org/">OpenWeather</a> contributors'
+                                url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+                            />
+                        </LayersControl.BaseLayer>
+
+                        <LayersControl.Overlay checked name='Temperature Map'>
+                            <TileLayer
+                                attribution='&copy; <a href="https://openweathermap.org/">OpenWeather</a> contributors'
+                                url={mapUrl}
+                            />
+                        </LayersControl.Overlay>
+                        <LayersControl.Overlay name='Precipitation Map'>
+                            <TileLayer
+                                attribution='&copy; <a href="https://openweathermap.org/">OpenWeather</a> contributors'
+                                url={`https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=${process.env.REACT_APP_API_KEY}`}
+                            />
+                        </LayersControl.Overlay>
+
+                        <LayersControl.Overlay name='Clouds Map'>
+                            <TileLayer
+                                attribution='&copy; <a href="https://openweathermap.org/">OpenWeather</a> contributors'
+                                url={`https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=${process.env.REACT_APP_API_KEY}`}
+                            />
+                        </LayersControl.Overlay>
+
+                        <LayersControl.Overlay name='Sea level Pressure Map'>
+                            <TileLayer
+                                attribution='&copy; <a href="https://openweathermap.org/">OpenWeather</a> contributors'
+                                url={`https://tile.openweathermap.org/map/pressure_new/{z}/{x}/{y}.png?appid=${process.env.REACT_APP_API_KEY}`}
+                            />
+                        </LayersControl.Overlay>
+
+                        <LayersControl.Overlay name='Wind Speed Map'>
+                            <TileLayer
+                                attribution='&copy; <a href="https://openweathermap.org/">OpenWeather</a> contributors'
+                                url={`https://tile.openweathermap.org/map/wind_new/{z}/{x}/{y}.png?appid=${process.env.REACT_APP_API_KEY}`}
+                            />
+                        </LayersControl.Overlay>
+                        <LocationMarker />
+                    </LayersControl>
                 </MapContainer>
             </Container>
         </>
